@@ -160,7 +160,7 @@ print(final_hash.hex())
 """
 -----------------------------------------------------------------------
 
-rename files in drive
+rename and overwrite files in drive
 """
 
 
