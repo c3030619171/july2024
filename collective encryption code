@@ -7,9 +7,9 @@ feel free to contact me for any assistance related to programming
 
 
 LINE 17  : encryption code
-LINE 90  : decryption code
-Line 137 : derive password using mnemonics
-line 175 : rename files in drive
+LINE 115  : decryption code
+Line 171 : derive password using mnemonics
+line 211 : rename files in drive
 
 -----------------------------------------------------------------------
 ENCRYPTION
@@ -20,6 +20,36 @@ from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
+from sympy import prime
+import hashlib
+
+first_favorite_prime_number_of_saqlain = int(input())
+second_favorite_prime_number_of_saqlain = int(input())
+third_favorite_prime_number_of_saqlain = int(input())
+name_of_first_girlfriend_of_saqlain = input()
+first_favorite_composite_number_of_saqlain= str(input())
+
+primes = [prime(i) for i in range(1, second_favorite_prime_number_of_saqlain + 1)]
+for prime_number in primes:
+    first_favorite_prime_number_of_saqlain *= prime_number
+
+def repeated_hash(input_value, third_favorite_prime_number_of_saqlain):
+    hash_value = input_value.encode()
+    for i in range(third_favorite_prime_number_of_saqlain):
+        hash_value = hashlib.sha256(hash_value).digest()
+    salted_hash_base = name_of_first_girlfriend_of_saqlain + hash_value.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
+    
+    for i in range(101263181):  # last favorite prime number of saqlain
+       salted_hash = hashlib.sha256(salted_hash_base.encode()).digest() 
+       salted_hash_base = name_of_first_girlfriend_of_saqlain + salted_hash.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
+       if str(salted_hash.hex()).startswith(first_favorite_composite_number_of_saqlain):
+          print(i)
+          break
+    return salted_hash.hex()
+
+token = str(repeated_hash(str(first_favorite_prime_number_of_saqlain), third_favorite_prime_number_of_saqlain))
+
+####################################################################################################
 
 def derive_key(password: str, salt: bytes, iterations: int = 2**14):
     kdf = Scrypt(
@@ -31,7 +61,6 @@ def derive_key(password: str, salt: bytes, iterations: int = 2**14):
         backend=default_backend()
     )
     return kdf.derive(password.encode())
-
 def encrypt_file(file_path, output_path, password):
     backend = default_backend()
     salt = urandom(16)
@@ -48,35 +77,28 @@ def encrypt_file(file_path, output_path, password):
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
     encryptor = cipher.encryptor()
     padder = padding.PKCS7(algorithms.AES.block_size).padder()
-    
     with open(file_path, 'rb') as f:
         data = f.read()
-    
     padded_data = padder.update(data) + padder.finalize()
     encrypted_data = encryptor.update(padded_data) + encryptor.finalize()
-    
     with open(output_path, 'wb') as f:
         f.write(salt + iv + encrypted_data)
-
 def process_directory(directory, password, output_folder):
     for dirpath, _, filenames in os.walk(directory):
         for filename in filenames:
             file_path = os.path.join(dirpath, filename)
             relative_path = os.path.relpath(file_path, directory)
             output_path = os.path.join(output_folder, relative_path + '.enc')
-            
+
+            if os.path.exists(output_path) or file_path.endswith("gdoc"):
+                print("already")
+                continue
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
             encrypt_file(file_path, output_path, password)
-
-# Define paths
-input_folder = '/content/drive/My Drive/all_data'  # Your folder name here
+input_folder = '/content/drive/My Drive/all_data'
 output_folder = '/content/drive/My Drive/all_encrypted_data'
 os.makedirs(output_folder, exist_ok=True)
-
-# Password for encryption
-password = input("Enter password for encryption: ")
-# Encrypt files
-process_directory(input_folder, password.encode(), output_folder)
+process_directory(input_folder, token.encode(), output_folder)
 print("Encryption complete.")
 
 """
@@ -86,7 +108,10 @@ Encryption Code Ends Here
 ------------------------------------------------------------------------------------------------
 
 Decryption Code Start here
+
 """
+
+
 def decrypt_file(encrypted_file_path, password, output_folder):
     with open(encrypted_file_path, 'rb') as f:
         salt = f.read(16)  # First 16 bytes are the salt
@@ -130,10 +155,19 @@ password = input("Enter password for decryption: ")
 process_decryption(encrypted_folder, password.encode(), decrypted_folder)
 print("Decryption complete.")
 """
+
+
+
 -------------------------------------------------------
 
+
 mnemonic password generator
+
+
+
 """
+
+
 from sympy import prime
 import hashlib
 
@@ -160,12 +194,17 @@ def repeated_hash(input_value, third_favorite_prime_number_of_saqlain):
           print(i)
           break
     return salted_hash.hex()
-token = str(repeated_hash(str(first_favorite_prime_number_of_saqlain), third_favorite_prime_number_of_saqlain))
+password = str(repeated_hash(str(first_favorite_prime_number_of_saqlain), third_favorite_prime_number_of_saqlain))
+
+
 """
+
 -----------------------------------------------------------------------
 
 
+
 rename and overwrite files in drive
+
 """
 
 
@@ -190,6 +229,14 @@ encrypted_folder = '/content/drive/My Drive/all_encrypted_data'
 
 overwrite_with_encrypted_files(original_folder, encrypted_folder)
 print("Overwrite and rename complete.")
+
+
+
+
+
+
+
+
 """
 
 prompt for regenerating encryption code 
