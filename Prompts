@@ -1,0 +1,5 @@
+Prompt for Encryption Schme:
+Can you provide a code example for AES encryption in CBC mode that includes Google Drive file handling,
+uses Scrypt for key derivation,
+and includes PKCS7 padding for secure encryption and decryption of files?
+
