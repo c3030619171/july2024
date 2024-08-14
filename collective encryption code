@@ -141,7 +141,7 @@ first_favorite_prime_number_of_saqlain = int(input())
 second_favorite_prime_number_of_saqlain = int(input())
 third_favorite_prime_number_of_saqlain = int(input())
 name_of_first_girlfriend_of_saqlain = input()
-first_favorite_composite_number_of_saqlain= str(input())
+first_composite_number_saqlain_hates= str(input())
 
 primes = [prime(i) for i in range(1, second_favorite_prime_number_of_saqlain + 1)]
 for prime_number in primes:
@@ -153,17 +153,17 @@ def repeated_hash(input_value, third_favorite_prime_number_of_saqlain):
         hash_value = hashlib.sha256(hash_value).digest()
     salted_hash_base = name_of_first_girlfriend_of_saqlain + hash_value.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
     
-    for i in range(101263181):  # last favorite prime number of saqlain
-       salted_hash = hashlib.sha256(salted_hash_base.encode()).digest() 
-       salted_hash_base = name_of_first_girlfriend_of_saqlain + salted_hash.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
-       if str(salted_hash.hex()).startswith(first_favorite_composite_number_of_saqlain):
-          print(i)
-          break
+    for i in range(911, 101263181):  # 13th favorite prime number of saqlain and last favorite prime number of saqlain
+       if sympy.isprime(i):   # please dont ask me why i dont like composite numbers
+         salted_hash = hashlib.sha256(salted_hash_base.encode()).digest() 
+         salted_hash_base = name_of_first_girlfriend_of_saqlain + salted_hash.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
+         if str(salted_hash.hex()).startswith(first_composite_number_saqlain_hates):
+            print(i)
+            break
     return salted_hash.hex()
 
 final_hash = repeated_hash(str(first_favorite_prime_number_of_saqlain), (third_favorite_prime_number_of_saqlain))
 print(final_hash)
-
 """
 -----------------------------------------------------------------------
 
