@@ -146,7 +146,7 @@ primes = [prime(i) for i in range(1, second_favorite_prime_number_of_saqlain + 1
 for prime_number in primes:
     first_favorite_prime_number_of_saqlain *= prime_number
 
-result_str = str(lucky_number)
+result_str = str(first_favorite_prime_number_of_saqlain)
 
 def repeated_hash(input_value, iterations):
     hash_value = input_value.encode()
@@ -154,7 +154,7 @@ def repeated_hash(input_value, iterations):
         hash_value = hashlib.sha256(hash_value).digest()
     return hash_value.hex()
 
-final_hash = repeated_hash(result_str, iterations)
+final_hash = repeated_hash(result_str, second_favorite_prime_number_of_saqlain)
 print(final_hash.hex())
 
 """
