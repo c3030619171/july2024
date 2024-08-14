@@ -176,17 +176,13 @@ def overwrite_with_encrypted_files(original_folder, encrypted_folder):
 
             if os.path.exists(encrypted_file_path):
                 shutil.copyfile(encrypted_file_path, original_file_path)
-
-    for dirpath, _, filenames in os.walk(original_folder):
-        for filename in filenames:
-            original_file_path = os.path.join(dirpath, filename)
-            new_file_path = original_file_path + '.enc'
-            os.rename(original_file_path, new_file_path)
+                print("yes")
+                new_file_path = original_file_path + '.enc'
+                os.rename(original_file_path, new_file_path)
 
 original_folder = '/content/drive/My Drive/all_data'
 encrypted_folder = '/content/drive/My Drive/all_encrypted_data'
 
 overwrite_with_encrypted_files(original_folder, encrypted_folder)
 print("Overwrite and rename complete.")
-
 """
