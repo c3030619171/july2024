@@ -132,7 +132,7 @@ print("Decryption complete.")
 """
 -------------------------------------------------------
 
-knemonic password generator
+mnemonic password generator
 """
 from sympy import prime
 import hashlib
