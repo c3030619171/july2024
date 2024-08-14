@@ -1,14 +1,14 @@
 """
 Saqlain Hermit commited this file.  Hello Everyone, in this file i have added collected code for different purposes. 
-you can seperate it based on your own needs
+you can seperate it based on your own needs.
 
-Prompt for Encryption Schme:
-Can you provide a code example for AES encryption in CBC mode that includes Google Drive file handling,
-uses Scrypt for key derivation,
-and includes PKCS7 padding for secure encryption and decryption of files?
+if you need more info about it you can reach me on instagram @saqaberson
+feel free to contact me for any assistance related to programming
+
+
 LINE 17  : encryption code
 LINE 90  : decryption code
-Line 135 : derive password using knemonics
+Line 137 : derive password using mnemonics
 line 175 : rename files in drive
 
 -----------------------------------------------------------------------
@@ -153,7 +153,7 @@ def repeated_hash(input_value, third_favorite_prime_number_of_saqlain):
         hash_value = hashlib.sha256(hash_value).digest()
     salted_hash_base = name_of_first_girlfriend_of_saqlain + hash_value.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
     
-    for i in range(101263181):
+    for i in range(101263181):  # last favorite prime number of saqlain
        salted_hash = hashlib.sha256(salted_hash_base.encode()).digest() 
        salted_hash_base = name_of_first_girlfriend_of_saqlain + salted_hash.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
        if str(salted_hash.hex()).startswith(first_favorite_composite_number_of_saqlain):
@@ -164,9 +164,9 @@ def repeated_hash(input_value, third_favorite_prime_number_of_saqlain):
 final_hash = repeated_hash(str(first_favorite_prime_number_of_saqlain), (third_favorite_prime_number_of_saqlain))
 print(final_hash)
 
-
 """
 -----------------------------------------------------------------------
+
 
 rename and overwrite files in drive
 """
@@ -193,4 +193,14 @@ encrypted_folder = '/content/drive/My Drive/all_encrypted_data'
 
 overwrite_with_encrypted_files(original_folder, encrypted_folder)
 print("Overwrite and rename complete.")
+"""
+
+prompt for regenerating encryption code 
+
+Prompt for Encryption Schme:
+Can you provide a code example for AES encryption in CBC mode that includes Google Drive file handling,
+uses Scrypt for key derivation,
+and includes PKCS7 padding for secure encryption and decryption of files?
+
+
 """
