@@ -137,14 +137,14 @@ knemonic password generator
 from sympy import prime
 import hashlib
 
-n_primes = int(input())
-iterations = int(input())
-lucky_number = int(input())
+first_favorite_prime_number_of_saqlain = int(input())
+second_favorite_prime_number_of_saqlain = int(input())
+third_favorite_prime_number_of_saqlain = int(input())
 
-primes = [prime(i) for i in range(1, n_primes + 1)]
+primes = [prime(i) for i in range(1, second_favorite_prime_number_of_saqlain + 1)]
 
 for prime_number in primes:
-    lucky_number *= prime_number
+    first_favorite_prime_number_of_saqlain *= prime_number
 
 result_str = str(lucky_number)
 
