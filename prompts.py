@@ -7,7 +7,7 @@ Can you provide a code example for AES encryption in CBC mode that includes Goog
 uses Scrypt for key derivation,
 and includes PKCS7 padding for secure encryption and decryption of files?
 LINE 15  : encryption code
-LINE 90  : decryption code
+LINE 88  : decryption code
 Line 135 : derive password using knemonics
 -----------------------------------------------------------------------
 ENCRYPTION
@@ -79,9 +79,9 @@ print("Encryption complete.")
 
 """
 Encryption Code Ends Here
+
+
 ------------------------------------------------------------------------------------------------
-
-
 
 Decryption Code Start here
 """
@@ -127,4 +127,30 @@ password = input("Enter password for decryption: ")
 # Decrypt files
 process_decryption(encrypted_folder, password.encode(), decrypted_folder)
 print("Decryption complete.")
+"""
+-------------------------------------------------------
 
+knemonic password generator
+"""
+from sympy import prime
+import hashlib
+
+n_primes = int(input())
+iterations = int(input())
+lucky_number = int(input())
+
+primes = [prime(i) for i in range(1, n_primes + 1)]
+
+for prime_number in primes:
+    lucky_number *= prime_number
+
+result_str = str(lucky_number)
+
+def repeated_hash(input_value, iterations):
+    hash_value = input_value.encode()
+    for _ in range(iterations):
+        hash_value = hashlib.sha256(hash_value).digest()
+    return hash_value.hex()
+
+final_hash = repeated_hash(result_str, iterations)
+print(final_hash.hex())
