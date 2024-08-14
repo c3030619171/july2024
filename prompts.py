@@ -6,9 +6,11 @@ Prompt for Encryption Schme:
 Can you provide a code example for AES encryption in CBC mode that includes Google Drive file handling,
 uses Scrypt for key derivation,
 and includes PKCS7 padding for secure encryption and decryption of files?
-LINE 15  : encryption code
-LINE 88  : decryption code
+LINE 17  : encryption code
+LINE 90  : decryption code
 Line 135 : derive password using knemonics
+line 167 : rename files in drive
+
 -----------------------------------------------------------------------
 ENCRYPTION
 """
@@ -154,3 +156,37 @@ def repeated_hash(input_value, iterations):
 
 final_hash = repeated_hash(result_str, iterations)
 print(final_hash.hex())
+
+"""
+-----------------------------------------------------------------------
+
+rename files in drive
+"""
+
+
+import os
+import shutil
+
+def overwrite_with_encrypted_files(original_folder, encrypted_folder):
+    for dirpath, _, filenames in os.walk(original_folder):
+        for filename in filenames:
+            original_file_path = os.path.join(dirpath, filename)
+            relative_path = os.path.relpath(original_file_path, original_folder)
+            encrypted_file_path = os.path.join(encrypted_folder, relative_path + '.enc')
+
+            if os.path.exists(encrypted_file_path):
+                shutil.copyfile(encrypted_file_path, original_file_path)
+
+    for dirpath, _, filenames in os.walk(original_folder):
+        for filename in filenames:
+            original_file_path = os.path.join(dirpath, filename)
+            new_file_path = original_file_path + '.enc'
+            os.rename(original_file_path, new_file_path)
+
+original_folder = '/content/drive/My Drive/all_data'
+encrypted_folder = '/content/drive/My Drive/all_encrypted_data'
+
+overwrite_with_encrypted_files(original_folder, encrypted_folder)
+print("Overwrite and rename complete.")
+
+"""
