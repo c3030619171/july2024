@@ -1,13 +1,17 @@
+"""
+Saqlain Hermit commited this file.  Hello Everyone, in this file i have added collected code for different purposes. 
+you can seperate it based on your own needs
+
 Prompt for Encryption Schme:
 Can you provide a code example for AES encryption in CBC mode that includes Google Drive file handling,
 uses Scrypt for key derivation,
 and includes PKCS7 padding for secure encryption and decryption of files?
-
-LINE 8 LINE 81
+LINE 15  : encryption code
+LINE 90  : decryption code
+Line 135 : derive password using knemonics
 -----------------------------------------------------------------------
 ENCRYPTION
-
-
+"""
 import os
 from os import urandom
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
@@ -73,11 +77,14 @@ password = input("Enter password for encryption: ")
 process_directory(input_folder, password.encode(), output_folder)
 print("Encryption complete.")
 
-
+"""
+Encryption Code Ends Here
 ------------------------------------------------------------------------------------------------
 
 
 
+Decryption Code Start here
+"""
 def decrypt_file(encrypted_file_path, password, output_folder):
     with open(encrypted_file_path, 'rb') as f:
         salt = f.read(16)  # First 16 bytes are the salt
