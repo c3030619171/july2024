@@ -9,7 +9,7 @@ and includes PKCS7 padding for secure encryption and decryption of files?
 LINE 17  : encryption code
 LINE 90  : decryption code
 Line 135 : derive password using knemonics
-line 167 : rename files in drive
+line 175 : rename files in drive
 
 -----------------------------------------------------------------------
 ENCRYPTION
@@ -140,22 +140,30 @@ import hashlib
 first_favorite_prime_number_of_saqlain = int(input())
 second_favorite_prime_number_of_saqlain = int(input())
 third_favorite_prime_number_of_saqlain = int(input())
+name_of_first_girlfriend_of_saqlain = input()
+first_favorite_composite_number_of_saqlain= str(input())
 
 primes = [prime(i) for i in range(1, second_favorite_prime_number_of_saqlain + 1)]
-
 for prime_number in primes:
     first_favorite_prime_number_of_saqlain *= prime_number
 
-result_str = str(first_favorite_prime_number_of_saqlain)
-
-def repeated_hash(input_value, iterations):
+def repeated_hash(input_value, third_favorite_prime_number_of_saqlain):
     hash_value = input_value.encode()
-    for _ in range(iterations):
+    for i in range(third_favorite_prime_number_of_saqlain):
         hash_value = hashlib.sha256(hash_value).digest()
-    return hash_value.hex()
+    salted_hash_base = name_of_first_girlfriend_of_saqlain + hash_value.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
+    
+    for i in range(101263181):
+       salted_hash = hashlib.sha256(salted_hash_base.encode()).digest() 
+       salted_hash_base = name_of_first_girlfriend_of_saqlain + salted_hash.hex() +  "101263181" # anti_bruteforce_padding_for_extra_security
+       if str(salted_hash.hex()).startswith(first_favorite_composite_number_of_saqlain):
+          print(i)
+          break
+    return salted_hash.hex()
 
-final_hash = repeated_hash(result_str, second_favorite_prime_number_of_saqlain)
-print(final_hash.hex())
+final_hash = repeated_hash(str(first_favorite_prime_number_of_saqlain), (third_favorite_prime_number_of_saqlain))
+print(final_hash)
+
 
 """
 -----------------------------------------------------------------------
