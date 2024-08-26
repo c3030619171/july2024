@@ -23,6 +23,7 @@ import threading
 import keyboard
 from tkinter import simpledialog
 
+
 class VideoDecryptorApp:
     def __init__(self, root, vlc_path, password):
         self.root = root
@@ -528,11 +529,85 @@ def decrypt_folder(input_folder, output_folder, password, progress_bar, total_fi
                 screen.update_idletasks()
          
     messagebox.showinfo("Info", f"Decryption Completed and saved to {output_folder}")
-
-
 def button1_clicked(event=None):
-    root.iconify()
-    create_encrypt_screen()
+    def oks():
+        text_widget_frs.delete(1.0, tk.END)
+
+    def on_first_func():
+        root.iconify()
+        custom_dialog.destroy()
+        create_encrypt_screen()
+
+    def on_second_func():
+        oks()
+        if not main_password_label_entry: 
+            return
+
+        password = main_password_label_entry.get()
+        file_path = file_path_label_entry.get()
+        if not password: 
+            return
+        
+        root.iconify()
+        print(file_path)
+        result = encrypt_file(file_path,file_path,password)
+        if not result:
+            messagebox.showinfo("Info", password)
+
+    def get_and_check_frs():
+        session_token_check_label_result_frs = session_token_check_label_entry.get()
+        sha256_hash = hashlib.sha256()
+        sha256_hash.update(session_token_check_label_result_frs.encode('utf-8'))
+        resultfrs = sha256_hash.hexdigest()
+        text_widget_frs.delete(1.0, tk.END)
+        text_widget_frs.insert(tk.END, resultfrs)
+        session_token_check_label_entry.delete(0, tk.END)
+
+
+    custom_dialog = tk.Toplevel(root)
+    custom_dialog.title("Choose Decryption Method")
+    custom_dialog.iconbitmap(r"a.ico")
+    window_width = 300
+    window_height = 550
+    screen_width = custom_dialog.winfo_screenwidth()
+    screen_height = custom_dialog.winfo_screenheight()
+    x = (screen_width - window_width) // 2
+    y = (screen_height - window_height) // 2
+
+    custom_dialog.geometry(f"{window_width}x{window_height}+{x}+{y}")
+    custom_dialog.transient(root)  
+
+
+    session_token_check_label = tk.Label(custom_dialog, text="Session Token Password")
+    session_token_check_label.pack(pady=10)
+    session_token_check_label_entry = tk.Entry(custom_dialog)
+    session_token_check_label_entry.pack(pady=10)
+
+    continue_hash_button = tk.Button(custom_dialog, text="Get", command=get_and_check_frs)
+    continue_hash_button.pack(pady=10)
+    text_widget_frs = tk.Text(custom_dialog, wrap='word', height=3, width=50)
+    text_widget_frs.pack(padx=10, pady=10)
+
+
+    main_password_label = tk.Label(custom_dialog, text="Main Password")
+    main_password_label.pack(pady=10)
+    main_password_label_entry = tk.Entry(custom_dialog)
+    main_password_label_entry.pack(pady=10)
+    this_password = main_password_label_entry.get()
+
+    file_path_label = tk.Label(custom_dialog, text="File Path")
+    file_path_label.pack(pady=10)
+    file_path_label_entry = tk.Entry(custom_dialog)
+    file_path_label_entry.pack(pady=10)
+    file_path = file_path_label_entry.get()
+
+    tk.Label(custom_dialog, text="").pack(pady=10)
+
+    tk.Button(custom_dialog, text="Folder Encryption", command=on_first_func).pack(pady=5)
+    tk.Button(custom_dialog, text="Single File", command=on_second_func).pack(pady=5)
+
+    #root.iconify()
+    #create_encrypt_screen()
 def button2_clicked(event=None):
     def oks():
         text_widget_frs.delete(1.0, tk.END)
@@ -1114,7 +1189,6 @@ def check_chrome():
     start_main_thread()
     update_time()
     root.mainloop()
-
 def check_hash():
 
     screen = tk.Tk()
