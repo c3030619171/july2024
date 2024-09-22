@@ -1,3 +1,13 @@
+"""
+use this to compile the exe from the given code
+save the given code as HDM.py
+
+pyinstaller --onefile --noconsole --icon=a.ico --add-data "D:\downloads\installedsoftwares\python3.8\Lib\site-packages\tkinterdnd2\tkdnd;tkdnd" --add-data "D:\downloads\installedsoftwares\python3.8\Lib\site-packages\tkinterdnd2;tkinterdnd2" --add-data "D:\downloads\installedsoftwares\python3.8\Lib\site-packages\tkinterdnd2\tkdnd\win-x64;tkdnd/win-x64" HDM.py
+
+"""
+
+"""Code Starts Here"""
+
 # -*- coding: utf-8 -*-
 import os
 import tkinter as tk
@@ -490,9 +500,11 @@ def decrypt_file(file_path, output_path, password):
         with open(output_path, 'wb') as f:
             f.write(data)
         return True
-    except: 
+    except Exception as e:
+        print(f"Decryption failed for {file_path}: {e}")
         return False
     #print(f"Decrypted and saved {file_path} to {output_path}")
+listforfailedfiles = []
 def decrypt_folder(input_folder, output_folder, password, progress_bar, total_files,screen,filed_count_label):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -511,23 +523,21 @@ def decrypt_folder(input_folder, output_folder, password, progress_bar, total_fi
                     remaining_files = total_files-decrypted_files
                     filed_count_label.config(text=f"Decrypted Files: {decrypted_files} / Remaining Files: {remaining_files}")
                     screen.update_idletasks()
-                    print("already")
+                    #print("already")
                     continue 
-                print("doing")
+                #print("doing")
                 os.makedirs(os.path.dirname(output_path), exist_ok=True)
                 decryption_success = decrypt_file(file_path, output_path, password)
 
                 if not decryption_success:
-                    messagebox.showinfo("Error", f"Incorrect Password: {file_path}")
-                    
-                    screen.destroy()
-                    return
+                    listforfailedfiles.append(file)
+                    print(file)
                 decrypted_files += 1
                 progress_bar['value'] = (decrypted_files / total_files) * 100
                 remaining_files = total_files-decrypted_files
                 filed_count_label.config(text=f"Decrypted Files: {decrypted_files} / Remaining Files: {remaining_files}")
                 screen.update_idletasks()
-         
+
     messagebox.showinfo("Info", f"Decryption Completed and saved to {output_folder}")
 def button1_clicked(event=None):
     def oks():
@@ -1336,5 +1346,4 @@ update_all_button_colors()
 
 root.mainloop()
 
-
-
+"""Code Ends Here"""
